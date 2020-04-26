@@ -1,21 +1,8 @@
 (ns warandpeaceentropy.main
   (:require
-    [clojure.string :as str]
-    [com.climate.claypoole :as cp]
-    [com.climate.claypoole :as cplazy])
+    [clojure.string :as str])
   (:gen-class)
 )
-
-(defn myfun
-  [x]
-  (+ x 1))
-
-; (defn -main
-;     [& args]
-;     ; (def pool (cp/threadpool 10 :daemon false))
-;     (def pool (cp/threadpool 2))
-;     (println (cp/pmap pool myfun (vector 1 2 3 4 5 6)))
-;     (cp/shutdown pool))
 
 ; reads file and returns vector of character clumps
 (defn readfile
@@ -33,56 +20,109 @@
   (identity array)
 )
 
-; takes in vector of character clumps and returns a hash-map of occurrence counts
-(defn countOccurrences
-  [listofcharacterclumps]
-  (print "Counting occurrences . . . ")
-  (def occurrences (hash-map "a" 3))
-  (def numberofclumps (count listofcharacterclumps))
-  (loop [x 0]
-    (when (< x numberofclumps)
-      (def occurrences (merge-with + occurrences (hash-map (nth listofcharacterclumps x) 1)))
-      (recur (+ x 1)))
-  )
-  (println ". . . occurrences counted")
-  (vals occurrences)
+; returns the amount of entropy in the specified file with the specified character split
+(defn getEntropySingleThread
+  [occurrance_counts total]
+
+  ; log base 2
+  (defn log2 [n]
+    (/ (Math/log n) (Math/log 2)))
+
+  ; function defined in assignment
+  (defn termFunction [n]
+    (def n_c n)
+    (def p_c (/ n total))
+    (* n_c (* (* -1 p_c) (log2 p_c))))
+
+  (print "Calculating entropy . . . ")
+  (def result (map termFunction occurrance_counts))
+  (println ". . . entropy calculated")
+  (reduce + result)
 )
 
-; log base 2
-(defn log2 [n]
-  (/ (Math/log n) (Math/log 2)))
+(defn getEntropyMultiThread2
+  [occurrance_counts total]
+  (defn singleThreadWrapper [oc] (getEntropySingleThread oc total))
+  (def chunk_size (int (Math/ceil (/ (count occurrance_counts) 2))))
+  (println "CHUNK SIZE")
+  (println chunk_size)
+  (def partitioned (split-at chunk_size occurrance_counts))
+  (reduce + (doall (pmap singleThreadWrapper partitioned)))
+)
 
-; function defined in assignment
-(defn termFunction [n_c_p_c]
-  (def n_c (nth n_c_p_c 0))
-  (def p_c (nth n_c_p_c 1))
-  (* n_c (* (* -1 p_c) (log2 p_c))))
+(defn getEntropyMultiThread4
+  [occurrance_counts total]
+  (defn doubleThreadWrapper [oc] (getEntropyMultiThread2 oc total))
+  (def chunk_size (int (Math/ceil (/ (count occurrance_counts) 2))))
+  (println "CHUNK SIZE")
+  (println chunk_size)
+  (def partitioned (split-at chunk_size occurrance_counts))
+  (reduce + (doall (pmap doubleThreadWrapper partitioned)))
+)
 
-; returns the amount of entropy in the specified file with the specified character split
-(defn getEntropy
-  [filename charactersplit]
-  (def result (countOccurrences (readfile filename charactersplit)))
-  (print "Calculating entropy . . . ")
-  (def total (reduce + result))
-  (defn n_cANDp_c [n] (vector n (/ n total)))
-  (def output (map termFunction (map n_cANDp_c result)))
-  (println ". . . entropy calculated")
-  (identity (reduce + output))
+(defn getEntropyMultiThread8
+  [occurrance_counts total]
+  (defn quadThreadWrapper [oc] (getEntropyMultiThread4 oc total))
+  (def chunk_size (int (Math/ceil (/ (count occurrance_counts) 2))))
+  (println "CHUNK SIZE")
+  (println chunk_size)
+  (def partitioned (split-at chunk_size occurrance_counts))
+  (reduce + (doall (pmap quadThreadWrapper partitioned)))
+)
+
+(defn getEntropyMultiThread16
+  [occurrance_counts total]
+  (defn octThreadWrapper [oc] (getEntropyMultiThread8 oc total))
+  (def chunk_size (int (Math/ceil (/ (count occurrance_counts) 2))))
+  (println "CHUNK SIZE")
+  (println chunk_size)
+  (def partitioned (split-at chunk_size occurrance_counts))
+  (reduce + (doall (pmap octThreadWrapper partitioned)))
+)
+
+(defn getEntropyMultiThread32
+  [occurrance_counts total]
+  (defn sixteenThreadWrapper [oc] (getEntropyMultiThread16 oc total))
+  (def chunk_size (int (Math/ceil (/ (count occurrance_counts) 2))))
+  (println "CHUNK SIZE")
+  (println chunk_size)
+  (def partitioned (split-at chunk_size occurrance_counts))
+  (reduce + (doall (pmap sixteenThreadWrapper partitioned)))
+)
+
+(defn getEntropyMultiThread64
+  [occurrance_counts total]
+  (defn thirtytwoThreadWrapper [oc] (getEntropyMultiThread32 oc total))
+  (def chunk_size (int (Math/ceil (/ (count occurrance_counts) 2))))
+  (println "CHUNK SIZE")
+  (println chunk_size)
+  (def partitioned (split-at chunk_size occurrance_counts))
+  (reduce + (doall (pmap thirtytwoThreadWrapper partitioned)))
 )
 
 ; main function
 (defn -main
   [& args]
-  (def filename "WarAndPeace.txt")
+
+  (def filename "Shorter.txt")
   (println "________Started________")
   (def start (System/currentTimeMillis))
+  (def end (System/currentTimeMillis))
   (if (.exists (clojure.java.io/file filename))
-    (do 
-      (def entropy (getEntropy filename 1))
-      (println (format "\n________Finished________\nTotal entropy: %f" entropy)))
+    (do
+      (def charactersplit 3)
+      (def file (readfile filename charactersplit))
+      ; takes in vector of character clumps and returns a hash-map of occurrence counts
+      (def occurrance_counts (vals (frequencies file)))
+      (def end (System/currentTimeMillis))
+      (println (format "Readtime: %d ms" (- end start)))
+      (def start (System/currentTimeMillis))
+      (def total (reduce + occurrance_counts))
+      (def entropy (getEntropyMultiThread64 occurrance_counts total))
+      (println (format "\n________Finished________\nTotal entropy: %s" (str entropy))))
     (println (format "File \"%s\" not found" filename)))
   (def end (System/currentTimeMillis))
-  (println (format "Runtime: %f seconds" (/ (- end start) 1000.0)))
+  (println (format "Runtime: %d ms" (- end start)))
   (System/exit 0)
 )
 
