@@ -4,22 +4,41 @@
   (:gen-class)
 )
 
-; returns vector of character clumps
-(defn split-file
-  [file charactersplit]
-  (def array (vector))
-  (def numberofchars (count file))
-  (loop [x 0]
-    (when (< x numberofchars)
-      (def item (subs file x (min numberofchars (+ x charactersplit))))
-      (def array (conj array item))
-      (recur (+ x charactersplit)))
+; define the index groups based on the number of threads
+(defn get-indexes
+  [some-size threads]
+  (def chunk_size (int (Math/ceil (/ some-size threads))))
+  (map-indexed
+    (fn [idx itm] [idx itm] (vector (Math/min (* idx chunk_size) (- some-size 1)) (Math/min (+ (* idx chunk_size) chunk_size) some-size)))
+    (vec (replicate threads 0))
   )
-  (identity array)
 )
 
 ; splits process into 'threads' number of threads
-(defn getEntropyMultiThreaded
+(defn split-file-multi-threaded
+  [threads file charactersplit]
+  ; returns vector of character clumps
+  (defn split-file-single-threaded
+    [beginindex endindex]
+    (def array (vector))
+    (loop [x 0]
+      (when (< x (- endindex beginindex))
+        (def array (conj array (subs (subs file beginindex endindex) x (min (- endindex beginindex) (+ x charactersplit)))))
+        (recur (+ x charactersplit)))
+    )
+    (identity array)
+  )
+
+  (defn conjresult [some-vector elements] (conj some-vector elements))
+  (def indexes (get-indexes (count file) threads))
+
+  (reduce conjresult (pmap (fn [index_group]
+    (split-file-single-threaded (nth index_group 0) (nth index_group 1))
+  ) indexes))
+)
+
+; splits process into 'threads' number of threads
+(defn get-entropy-multi-threaded
   [threads occurrance_counts total]
 
   ; log base 2
@@ -35,7 +54,7 @@
   )
 
   ; returns the amount of entropy in the specified file with the specified character split
-  (defn getEntropySingleThreaded
+  (defn get-entropy-single-threaded
     [beginindex endindex]
     (def result (map termFunction (subvec occurrance_counts beginindex endindex)))
     (reduce + result)
@@ -47,23 +66,15 @@
   ; if "threads < 2", use single threaded function
   ; else calulate with multiple threads
   (if (< threads 2)
-    (getEntropySingleThreaded beginindex endindex)
+    (get-entropy-single-threaded beginindex endindex)
     (do
-      ; define the index groups based on the number of threads
-      (def chunk_size (int (Math/ceil (/ endindex threads))))
-      (def indexes (map-indexed
-        (fn [idx itm] [idx itm] (vector (* idx chunk_size) (Math/min (+ (* idx chunk_size) chunk_size) endindex)))
-        (vec (replicate threads 0)))
-      )
+      (def indexes (get-indexes endindex threads))
       ; return the summation
       ; of the parallel map
-      ; of the getEntropySingleThreaded
+      ; of the get-entropy-single-threaded
       ; of the index groups
-      (reduce + (pmap (fn getEntropyMultiThreadedWrapper
-        [index_group]
-        (def b_i (nth index_group 0))
-        (def e_i (nth index_group 1))
-        (getEntropySingleThreaded b_i e_i)
+      (reduce + (pmap (fn [index_group]
+        (get-entropy-single-threaded (nth index_group 0) (nth index_group 1))
       ) indexes))
     )
   )
@@ -75,6 +86,7 @@
   ; (def filename "Shorter.txt")
   (def filename "WarAndPeace.txt")
   (println "________Started________")
+  (def begin (System/currentTimeMillis))
   (def start (System/currentTimeMillis))
   (def end (System/currentTimeMillis))
   (defn print-update
@@ -88,16 +100,20 @@
   (if (.exists (clojure.java.io/file filename))
     (do
       (def charactersplit 3)
+      (def threads 1)
       (print "Reading . . . ")
       (def filecontents (slurp filename))
       (print-update "Reading" "Splitting")
-      (def file (split-file filecontents charactersplit))
+      (def file (split-file-multi-threaded threads filecontents charactersplit))
+      (print-update "Splitting" "Occurrances")
       (def occurrance_counts (vec (vals (frequencies file))))
-      (print-update "Splitting" "Caclulating")
+      (print-update "Occurrances" "Caclulating")
       (def total (reduce + occurrance_counts))
-      (def entropy (getEntropyMultiThreaded 64 occurrance_counts total))
+      (def entropy (get-entropy-multi-threaded threads occurrance_counts total))
       (print-update "Calculating" "Done")
       (println (format ". . . Entropy: %f" entropy))
+      (def end (System/currentTimeMillis))
+      (println (format "Total time: %d ms" (- end begin)))
     )
     (println (format "File \"%s\" not found" filename))
   )
