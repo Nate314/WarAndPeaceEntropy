@@ -1,41 +1,16 @@
 import math;
-
-def termFunction(n, p):
-    return n * (-1 * p) * math.log(p, 2);
-
-def getEntropy(terms):
-    result = 0;
-    for x in terms:
-        result += x;
-    return result;
-
-def getOccurrences(splitfile):
-    dictionary = {};
-    for item in splitfile:
-        if item in dictionary.keys():
-            dictionary[item] = dictionary[item] + 1;
-        else:
-            dictionary[item] = 1;
-    return list(dictionary.values());
+import functools;
 
 def getTerms(occurrences):
-    total = 0;
-    for x in occurrences:
-        total += x;
-    result = [];
-    for x in occurrences:
-        result.append(termFunction(x, x / total));
-    return result;
+    total = functools.reduce(lambda a, b: a + b, occurrences);
+    return list(map(lambda x: termFunction(x, x / total), occurrences));
 
-def getSplitFile(filecontents, charactersplit):
-    splitfile = [];
-    for i in range(math.ceil(len(filecontents) / charactersplit)):
-        beginindex = (i * charactersplit);
-        endindex = (i * charactersplit) + charactersplit;
-        splitfile.append(filecontents[beginindex:endindex]);
-    return splitfile;
+# https://lerner.co.il/2014/05/11/creating-python-dictionaries-reduce/
+getOccurrences = lambda splitfile: list(functools.reduce(lambda d, current: d.update({current: d[current] + 1 if current in d.keys() else 1}) or d, splitfile, {}).values());
+getSplitFile = lambda file, charsplit: list(map(lambda x: file[(x[0] * charsplit):(x[0] * charsplit) + charsplit], enumerate([None] * math.ceil(len(file) / charsplit))));
+getEntropy = lambda splitfile: functools.reduce(lambda a, b: a + b, getTerms(getOccurrences(splitfile)));
+termFunction = lambda n, p: n * (-1 * p) * math.log(p, 2);
 
 filename = 'WarAndPeace.txt'; # Shorter.txt
 with open(filename, encoding='UTF-8') as reader:
-    entropy = getEntropy(getTerms(getOccurrences(getSplitFile(reader.read(), 3))));
-    print(entropy);
+    print(getEntropy(getSplitFile(reader.read(), 3)));
