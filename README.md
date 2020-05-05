@@ -1,17 +1,48 @@
-# CS441 Project 2: Clojure Project
+# CS441 Project 2: War and Peace Entropy
 
-## Output
+----
 
-```clojure
-________Started________
-Reading file . . . . . . file read
-Counting occurrences . . . . . . occurrences counted
-Calculating entropy . . . . . . entropy calculated
+The main idea of this assignment was to use multithreading and functional programming.
 
-________Finished________
-Total entropy: 742243.472915
-Runtime: 12.293000 seconds
+The below table is my results for timing:
+
+```javascript
+┌──────────────────────┬────────────────────┐
+│       (index)        │   processingtime   │
+├──────────────────────┼────────────────────┤
+│ 1Threads_1Charsplit  │ 2.6440184911092124 │
+│ 2Threads_1Charsplit  │ 1.9913242657979329 │
+│ 4Threads_1Charsplit  │ 1.7106651465098064 │
+│ 8Threads_1Charsplit  │ 1.6146669387817383 │
+│ 16Threads_1Charsplit │ 1.711000919342041  │
+│ 32Threads_1Charsplit │ 1.5623321533203125 │
+│ 64Threads_1Charsplit │ 1.628074089686076  │
+│ 1Threads_2Charsplit  │ 1.894021987915039  │
+│ 2Threads_2Charsplit  │ 1.3473333517710369 │
+│ 4Threads_2Charsplit  │ 1.109333833058675  │
+│ 8Threads_2Charsplit  │ 1.0560000737508137 │
+│ 16Threads_2Charsplit │ 1.0346657435099285 │
+│ 32Threads_2Charsplit │ 1.068146546681722  │
+│ 64Threads_2Charsplit │  1.04899795850118  │
+│ 1Threads_3Charsplit  │ 1.238346020380656  │
+│ 2Threads_3Charsplit  │ 0.8949518203735352 │
+│ 4Threads_3Charsplit  │ 0.7443586985270182 │
+│ 8Threads_3Charsplit  │ 0.7306671937306722 │
+│ 16Threads_3Charsplit │ 0.7456665833791097 │
+│ 32Threads_3Charsplit │ 0.7123541037241617 │
+│ 64Threads_3Charsplit │ 0.7430101235707601 │
+└──────────────────────┴────────────────────┘
 ```
+
+I ran this on a 4 core (8 logical core) laptop.
+
+Graphic results from desmos:
+
+readme_assets/desmos-graph-CS441-project2.png
+
+![desmos graph](readme_assets/desmos-graph-CS441-project2.png?raw=true)
+
+----
 
 ## Assignment Description
 

@@ -1,42 +1,43 @@
-Total time with 1 threads: 6.771985054016113 seconds . . . entropy: 743699.5262947411Total time with 1 threads: 9.020387649536133 seconds . . . entropy: 743699.5262947411Total time with 1 threads: 9.625630378723145 seconds . . . entropy: 743699.5262947411
-Average time with 1 threads and 1 charsplit: 8.472667694091797
-Total time with 2 threads: 7.032663106918335 seconds . . . entropy: 743699.5262947411Total time with 2 threads: 7.181407451629639 seconds . . . entropy: 743699.5262947411Total time with 2 threads: 6.687885761260986 seconds . . . entropy: 743699.5262947411
-Average time with 2 threads and 1 charsplit: 6.967318773269653
-Total time with 4 threads: 5.703626871109009 seconds . . . entropy: 743699.5262947411Total time with 4 threads: 5.362246990203857 seconds . . . entropy: 743699.5262947411Total time with 4 threads: 5.408756494522095 seconds . . . entropy: 743699.5262947411
-Average time with 4 threads and 1 charsplit: 5.491543451944987
-Total time with 8 threads: 4.868305921554565 seconds . . . entropy: 743699.5262947411Total time with 8 threads: 4.863368988037109 seconds . . . entropy: 743699.5262947411Total time with 8 threads: 5.228348016738892 seconds . . . entropy: 743699.5262947411
-Average time with 8 threads and 1 charsplit: 4.9866743087768555
-Total time with 16 threads: 4.974142551422119 seconds . . . entropy: 743699.5262947411Total time with 16 threads: 4.668802261352539 seconds . . . entropy: 743699.5262947411Total time with 16 threads: 4.880850315093994 seconds . . . entropy: 743699.5262947411
-Average time with 16 threads and 1 charsplit: 4.841265042622884
-Total time with 32 threads: 4.892603397369385 seconds . . . entropy: 743699.5262947411Total time with 32 threads: 4.727069616317749 seconds . . . entropy: 743699.5262947411Total time with 32 threads: 4.756839275360107 seconds . . . entropy: 743699.5262947411
-Average time with 32 threads and 1 charsplit: 4.792170763015747
-Total time with 64 threads: 4.883425235748291 seconds . . . entropy: 743699.5262947411Total time with 64 threads: 5.023580551147461 seconds . . . entropy: 743699.5262947411Total time with 64 threads: 4.70461368560791 seconds . . . entropy: 743699.5262947411
-Average time with 64 threads and 1 charsplit: 4.870539824167888
-Total time with 1 threads: 5.5720531940460205 seconds . . . entropy: 76412.57518637173Total time with 1 threads: 5.532352447509766 seconds . . . entropy: 76412.57518637173Total time with 1 threads: 5.473835468292236 seconds . . . entropy: 76412.57518637173
-Average time with 1 threads and 2 charsplit: 5.526080369949341
-Total time with 2 threads: 4.179167747497559 seconds . . . entropy: 76412.57518637173Total time with 2 threads: 4.257028102874756 seconds . . . entropy: 76412.57518637173Total time with 2 threads: 3.9940731525421143 seconds . . . entropy: 76412.57518637173
-Average time with 2 threads and 2 charsplit: 4.1434230009714765
-Total time with 4 threads: 3.1702098846435547 seconds . . . entropy: 76412.57518637173Total time with 4 threads: 3.2344863414764404 seconds . . . entropy: 76412.57518637173Total time with 4 threads: 3.2314932346343994 seconds . . . entropy: 76412.57518637173
-Average time with 4 threads and 2 charsplit: 3.2120631535847983
-Total time with 8 threads: 2.9962942600250244 seconds . . . entropy: 76412.57518637173Total time with 8 threads: 3.641181707382202 seconds . . . entropy: 76412.57518637173Total time with 8 threads: 3.575558662414551 seconds . . . entropy: 76412.57518637173
-Average time with 8 threads and 2 charsplit: 3.4043448766072593
-Total time with 16 threads: 3.0833020210266113 seconds . . . entropy: 76412.57518637173Total time with 16 threads: 3.038524627685547 seconds . . . entropy: 76412.57518637173Total time with 16 threads: 2.9649906158447266 seconds . . . entropy: 76412.57518637173
-Average time with 16 threads and 2 charsplit: 3.0289390881856284
-Total time with 32 threads: 3.5956625938415527 seconds . . . entropy: 76412.57518637173Total time with 32 threads: 3.013221025466919 seconds . . . entropy: 76412.57518637173Total time with 32 threads: 4.437023401260376 seconds . . . entropy: 76412.57518637173
-Average time with 32 threads and 2 charsplit: 3.6819690068562827
-Total time with 64 threads: 3.4926745891571045 seconds . . . entropy: 76412.57518637173Total time with 64 threads: 3.2072157859802246 seconds . . . entropy: 76412.57518637173Total time with 64 threads: 4.1239495277404785 seconds . . . entropy: 76412.57518637173
-Average time with 64 threads and 2 charsplit: 3.6079466342926025
-Total time with 1 threads: 3.6082990169525146 seconds . . . entropy: 14945.006061137938Total time with 1 threads: 3.790181875228882 seconds . . . entropy: 14945.006061137938Total time with 1 threads: 4.030509948730469 seconds . . . entropy: 14945.006061137938
-Average time with 1 threads and 3 charsplit: 3.8096636136372886
-Total time with 2 threads: 2.9036033153533936 seconds . . . entropy: 14945.006061137938Total time with 2 threads: 2.7348854541778564 seconds . . . entropy: 14945.006061137938Total time with 2 threads: 2.7440686225891113 seconds . . . entropy: 14945.006061137938
-Average time with 2 threads and 3 charsplit: 2.7941857973734536
-Total time with 4 threads: 2.1651201248168945 seconds . . . entropy: 14945.006061137938Total time with 4 threads: 2.170980930328369 seconds . . . entropy: 14945.006061137938Total time with 4 threads: 2.185823678970337 seconds . . . entropy: 14945.006061137938
-Average time with 4 threads and 3 charsplit: 2.1739749113718667
-Total time with 8 threads: 2.0527470111846924 seconds . . . entropy: 14945.006061137938Total time with 8 threads: 2.0056493282318115 seconds . . . entropy: 14945.006061137938Total time with 8 threads: 2.0528900623321533 seconds . . . entropy: 14945.006061137938
-Average time with 8 threads and 3 charsplit: 2.0370954672495523
-Total time with 16 threads: 2.0252296924591064 seconds . . . entropy: 14945.006061137938Total time with 16 threads: 2.064852714538574 seconds . . . entropy: 14945.006061137938Total time with 16 threads: 2.416358470916748 seconds . . . entropy: 14945.006061137938
-Average time with 16 threads and 3 charsplit: 2.168813625971476
-Total time with 32 threads: 2.0986099243164062 seconds . . . entropy: 14945.006061137938Total time with 32 threads: 2.2036330699920654 seconds . . . entropy: 14945.006061137938Total time with 32 threads: 2.3235864639282227 seconds . . . entropy: 14945.006061137938
-Average time with 32 threads and 3 charsplit: 2.2086098194122314
-Total time with 64 threads: 2.1353580951690674 seconds . . . entropy: 14945.006061137938Total time with 64 threads: 2.2031331062316895 seconds . . . entropy: 14945.006061137938Total time with 64 threads: 2.215118408203125 seconds . . . entropy: 14945.006061137938
-Average time with 64 threads and 3 charsplit: 2.1845365365346274
+
+Average time with 1 threads and 1 charsplit: 2.6440184911092124
+
+Average time with 2 threads and 1 charsplit: 1.9913242657979329
+
+Average time with 4 threads and 1 charsplit: 1.7106651465098064
+
+Average time with 8 threads and 1 charsplit: 1.6146669387817383
+
+Average time with 16 threads and 1 charsplit: 1.711000919342041
+
+Average time with 32 threads and 1 charsplit: 1.5623321533203125
+
+Average time with 64 threads and 1 charsplit: 1.628074089686076
+
+Average time with 1 threads and 2 charsplit: 1.894021987915039
+
+Average time with 2 threads and 2 charsplit: 1.3473333517710369
+
+Average time with 4 threads and 2 charsplit: 1.109333833058675
+
+Average time with 8 threads and 2 charsplit: 1.0560000737508137
+
+Average time with 16 threads and 2 charsplit: 1.0346657435099285
+
+Average time with 32 threads and 2 charsplit: 1.068146546681722
+
+Average time with 64 threads and 2 charsplit: 1.04899795850118
+
+Average time with 1 threads and 3 charsplit: 1.238346020380656
+
+Average time with 2 threads and 3 charsplit: 0.8949518203735352
+
+Average time with 4 threads and 3 charsplit: 0.7443586985270182
+
+Average time with 8 threads and 3 charsplit: 0.7306671937306722
+
+Average time with 16 threads and 3 charsplit: 0.7456665833791097
+
+Average time with 32 threads and 3 charsplit: 0.7123541037241617
+
+Average time with 64 threads and 3 charsplit: 0.7430101235707601
+
